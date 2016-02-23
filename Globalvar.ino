@@ -34,8 +34,10 @@ boolean DeviceCloud_Conn = false;
 EthernetClient ethClient;
 void callback(char* topic, byte* payload, unsigned int length);
 PubSubClient mqttclient(mqttServer, 1883, callback, ethClient);		// Istanzia un client Etherenet per SMARTLIVING
-ATTDevice Device(DEVICEID, CLIENTID, CLIENTKEY);					//Crea l'oggettp per essere gestito da SMARTLIVING
+ATTDevice Device(DEVICEID, CLIENTID, CLIENTKEY);					// Crea l'oggettp per essere gestito da SMARTLIVING
 unsigned long DeviceCloud_Last = 0;									// Ultima volta che abbiamo contattato il server SMARTLIVING in msec
+int attuatore_SmatLiving;											// usato per capire che attuatore è stato premuto
+Attuatori Att_SmartLiving;	
 
 //-------------------------------------------------------------------------------------------------
 // OWN

@@ -12,3 +12,9 @@ typedef struct				// Definisce un tipo di dati dove memorizzare i valori rilevat
   float Vasca;				// Litri presenti nella Vasca
 } Meteo;
 
+typedef struct 
+{
+	bool Att1;
+	bool Att2;
+	bool Att3;
+} Attuatori;
