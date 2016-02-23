@@ -40,6 +40,8 @@ PubSubClient mqttclient(mqttServer, 1883, callback, ethClient);		// Istanzia un 
 ATTDevice Device(DEVICEID, CLIENTID, CLIENTKEY);					// Crea l'oggettp per essere gestito da SMARTLIVING
 unsigned long DeviceCloud_Last = 0;									// Ultima volta che abbiamo contattato il server SMARTLIVING in msec
 const unsigned long DeviceCloud_Update_Interval = MQTTUPDATE * 1000L;	// intervallo di aggiornamento a devicehub.net in msec
+int attuatore_SmatLiving;
+Attuatori Att_SmartLiving;
 
 //-------------------------------------------------------------------------------------------------
 // OWN
@@ -47,6 +49,14 @@ const unsigned long DeviceCloud_Update_Interval = MQTTUPDATE * 1000L;	// interva
 char OWN_Vento2[] = "*1*15*0513##";			// Commando OWN per segnalare che c'e' vento forte (A=5 PL=13) per 5 Min
 char OWN_Vento1[] = "*2*2*0713##";			// Comando OWN per far alzare la Tenda Sole delle Camere
 char OWN_Pioggia[] = "*1*15*0514##";		// Commando OWN per segnalare che sta piovendo (A=5 PL=14) per 5 Min
+char OWN_Att1_ON[] = "*1*1*12##";			// Sala Pranzo ON
+char OWN_Att1_OFF[] = "*1*0*12##";			// Sala Pranzo OFF
+char OWN_Att2_ON[] = "*1*1*14##";			// Binario Soggiorno ON
+char OWN_Att2_OFF[] = "*1*0*14##";			// Binario Soggiorno OFF
+char OWN_Att3_ON[] = "*1*1*62##";			// Soppalco Ovest ON
+char OWN_Att3_OFF[] = "*1*0*62##";			// Soppalco Ovest OFF
+
+
 #ifdef DEVELOP
 char OWN_CrepuscolareON[] = "*1*1*61##";	// Commando OWN per segnalare che e' buio (A=5 PL=12)
 char OWN_CrepuscolareOFF[] = "*1*0*61##";	// Commando OWN per segnalare che non e' buio

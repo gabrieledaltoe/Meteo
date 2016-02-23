@@ -85,7 +85,6 @@ extern "C" void __cxa_pure_virtual() {;}
 #define portModeRegister(P)
 #include <..\Meteo\Meteo.ino>
 #include <..\Meteo\GlobalVar.h>
-#include <..\Meteo\Globalvar.ino>
 #include <..\Meteo\LCD.ino>
 #include <..\Meteo\Raingauge.ino>
 #include <..\Meteo\Wind.ino>

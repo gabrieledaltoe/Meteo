@@ -26,7 +26,6 @@ void SmartLiving_Run()
 		DeviceCloud_Last = millis();
 		}
 	Device.Process();
-		
 #endif
 }
 
@@ -37,10 +36,13 @@ void Init_SmartLiving()
 	#endif
 	if (Device.Connect(&ethClient, httpServer)) {    //Mi connetto a Smartliving.
 		#ifdef SMARTLIVING_FIRST_TIME			// Attivo solo se si deve creare gli asset la prima volta....
-		Device.AddAsset(IDLuce, "LUX", "Intensita' di luce in %", false, "integer");
-		Device.AddAsset(IDTemp, "Temperatura", "Temperatura Esterna", false, "number");
-		Device.AddAsset(IDHum, "Umidita", "Umidita' Esterna", false, "number");
-		Device.AddAsset(IDWind, "Vento", "Velocita' Vento", false, "number");
+		// Device.AddAsset(IDLuce, "LUX", "Intensita' di luce in %", false, "integer");
+		// Device.AddAsset(IDTemp, "Temperatura", "Temperatura Esterna", false, "number");
+		// Device.AddAsset(IDHum, "Umidita", "Umidita' Esterna", false, "number");
+		// Device.AddAsset(IDWind, "Vento", "Velocita' Vento", false, "number");
+		Device.AddAsset(11, "Sala Pranzo", "Luce della Sala da Pranzo", true, "boolean");
+		Device.AddAsset(12, "Binario Sogg", "Luce Binario Soggiorno", true, "boolean");
+		Device.AddAsset(13, "Soppalco Ovest", "Luce del Soppalco Ovest", true, "boolean");
 		while (!Device.Subscribe(mqttclient))	{// Ci assicuriamo che possiamo ricevere i messaggi da IOT 
 		#ifdef DEBUGSMARTLIVING	
 			Serial.println("retrying");
@@ -71,12 +73,12 @@ void callback(char* topic, byte* payload, unsigned int length)
 	{                                                       //put this in a sub block, so any unused memory can be freed as soon as possible, required to save mem while sending data
 		int pinNr = Device.GetPinNr(topic, strlen(topic));
 
-#ifdef DEBUGSMARTLIVIG
+		#ifdef DEBUGSMARTLIVIG
 		Serial.print("Payload: ");                            //show some debugging
 		Serial.println(msgString);
 		Serial.print("topic: ");
 		Serial.println(topic);
-#endif
+		#endif
 
 		pinNr == attuatore_SmatLiving;
 
@@ -84,33 +86,39 @@ void callback(char* topic, byte* payload, unsigned int length)
 		{
 		case 1:
 			if (msgString == "false") {
-				Att_SmartLiving.Att1 = false;
+				Att_SmartLiving.Att1[1] = false;
+				Att_SmartLiving.Att1[0] = true;
 			}
 			else
 				if (msgString == "true") {
-					Att_SmartLiving.Att1 = true;
+					Att_SmartLiving.Att1[1]= true;
+					Att_SmartLiving.Att1[0] = true;
 				}
 			idOut = &attuatore_SmatLiving;
 			break;
 
 		case 2:
 			if (msgString == "false") {
-				Att_SmartLiving.Att2 = false;
+				Att_SmartLiving.Att2[1] = false;
+				Att_SmartLiving.Att2[0] = true;
 			}
 			else
 				if (msgString == "true") {
-					Att_SmartLiving.Att2 = true;
+					Att_SmartLiving.Att2[1] = true;
+					Att_SmartLiving.Att2[0] = true;
 				}
 			idOut = &attuatore_SmatLiving;
 			break;
 
 		case 3:
 			if (msgString == "false") {
-				Att_SmartLiving.Att3 = false;
+				Att_SmartLiving.Att3[1] = false;
+				Att_SmartLiving.Att3[0] = true;
 			}
 			else
 				if (msgString == "true") {
-					Att_SmartLiving.Att3 = true;
+					Att_SmartLiving.Att3[1] = true;
+					Att_SmartLiving.Att3[0] = true;
 				}
 			idOut = &attuatore_SmatLiving;
 			break;
@@ -121,4 +129,46 @@ void callback(char* topic, byte* payload, unsigned int length)
 
 	if (idOut != NULL)                                           //Let the iot platform know that the operation was succesful
 		Device.Send(msgString, *idOut);
+
+	void ElaboraAttuatori();
+}
+
+void ElaboraAttuatori()
+{
+	if (Att_SmartLiving.Att1[0]) {
+		// C'è un cambio di stato
+		if (Att_SmartLiving.Att1[1]) {
+			OWN_SendData(OWN_Att1_ON);
+		}
+		else
+		{
+			OWN_SendData(OWN_Att1_OFF);
+		}
+		Att_SmartLiving.Att1[0] = false;
+	}
+
+	if (Att_SmartLiving.Att2[0]) {
+		// C'è un cambio di stato
+		if (Att_SmartLiving.Att2[1]){
+		OWN_SendData(OWN_Att2_ON);
+		}
+		else
+		{
+			OWN_SendData(OWN_Att2_OFF);
+		}
+		Att_SmartLiving.Att2[0] = false; 
+	}
+	
+	if (Att_SmartLiving.Att3[0]) {
+		// C'è un cambio di stato
+		if (Att_SmartLiving.Att3[1]) {
+			OWN_SendData(OWN_Att3_ON);
+		}
+		else
+		{
+			OWN_SendData(OWN_Att3_OFF);
+		}
+		Att_SmartLiving.Att3[0] = false;
+	}
+		
 }

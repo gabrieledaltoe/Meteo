@@ -14,7 +14,9 @@ typedef struct				// Definisce un tipo di dati dove memorizzare i valori rilevat
 
 typedef struct 
 {
-	bool Att1;
-	bool Att2;
-	bool Att3;
+	// Esempio: Att1[0]=1 significa che c'è stato un cambio di stato; (Att1[0]=0 no cambio stato).
+	//	        Att[1]=1 significa che l'attuatore è ON, Att[1]=0 significa che l'attuatore è OFF
+	bool Att1[2];   
+	bool Att2[2];
+	bool Att3[2];
 } Attuatori;

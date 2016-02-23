@@ -19,7 +19,6 @@
     <None Include="debug.ino" />
     <None Include="email.ino" />
     <None Include="ethernet.ino" />
-    <None Include="Globalvar.ino" />
     <None Include="LCD.ino" />
     <None Include="light.ino" />
     <None Include="own.ino" />
