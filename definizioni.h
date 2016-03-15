@@ -4,8 +4,8 @@
 // MODALITA' DI ESECUZIONE / DEBUG / AMBIENETE PRODUZIONE O TEST
 //-------------------------------------------------------------------------------------------------
 
-#define DEVELOP			// Per cambiare DEVELOP = ARDUINO Sviluppo, altrimenti Produzione
-// #define DEBUGRUN			// Predispone ambiente di test su arduinio di produzione con il Debug
+// #define DEVELOP			// Per cambiare DEVELOP = ARDUINO Sviluppo, altrimenti Produzione
+#define DEBUGRUN			// Predispone ambiente di test su arduinio di produzione con il Debug
 //___________________________________________________________________________________________________________
 
 #ifdef DEVELOP
