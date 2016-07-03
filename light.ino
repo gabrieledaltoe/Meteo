@@ -46,7 +46,7 @@ if (luce != StazioneMeteo.Lux) { // Considero solo i cambiamenti di luce, altrim
 	Serial.println(StazioneMeteo.Lux);
 	#endif	
 	StazioneMeteo.Lux = luce;         // Luce in percentuale (0-100) percento
-	#ifdef SYSLOG
+	#ifdef SYSLOGLIGHT
 	String syslogstring;
 	char logluce[5];
 	dtostrf(StazioneMeteo.Lux, 2, 1, logluce);

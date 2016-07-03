@@ -31,11 +31,12 @@ void SmartLiving_Run()
 
 void Init_SmartLiving()
 {
-	#ifdef DEBUGSMARTLIVING		
-	Serial.println("\nInizio Connessione con Smartliving...");
-	#endif
-	if (Device.Connect(&ethClient, httpServer)) {    //Mi connetto a Smartliving.
-		#ifdef SMARTLIVING_FIRST_TIME			// Attivo solo se si deve creare gli asset la prima volta....
+	String MSGSL;
+	MSGSL = "Inizio Connessione con Smartliving...";
+	debug_sl_message(MSGSL, 2);
+	
+	if (Device.Connect(&ethClient, httpServer)) {    
+
 		Device.AddAsset(IDLuce, "LUX", "Intensita' di luce in %", false, "integer");
 		Device.AddAsset(IDTemp, "Temperatura", "Temperatura Esterna", false, "number");
 		Device.AddAsset(IDHum, "Umidita", "Umidita' Esterna", false, "number");
@@ -43,23 +44,25 @@ void Init_SmartLiving()
 		Device.AddAsset(11, "Sala Pranzo", "Luce della Sala da Pranzo", true, "boolean");
 		Device.AddAsset(12, "Binario Sogg", "Luce Binario Soggiorno", true, "boolean");
 		Device.AddAsset(13, "Soppalco Ovest", "Luce del Soppalco Ovest", true, "boolean");
-		while (!Device.Subscribe(mqttclient))	{// Ci assicuriamo che possiamo ricevere i messaggi da IOT 
-		#ifdef DEBUGSMARTLIVING	
-			Serial.println("retrying");
-		#endif
+			
+		// Ci assicuriamo che possiamo ricevere i messaggi da IOT 
+		
+		while (!Device.Subscribe(mqttclient))	{
+			
+			MSGSL = "Ritento....";
+			debug_sl_message(MSGSL, 2);
 		}
-		#endif	
-		}
+	}
 	else {
-		#ifdef DEBUGSMARTLIVING	
-		Serial.println("Problemi di connessione a Smartliving....");
-		#endif
+		MSGSL = "Problemi di connessione a Smartliving....";
+		debug_sl_message(MSGSL, 1);
 	}
 
 }
 
 void callback(char* topic, byte* payload, unsigned int length)
 {
+	String MSGSL;
 	String msgString;
 	{                                                           //put this in a sub block, so any unused memory can be freed as soon as possible, required to save mem while sending data
 		char message_buff[length + 1];                        //need to copy over the payload so that we can add a /0 terminator, this can then be wrapped inside a string for easy manipulation
@@ -73,14 +76,8 @@ void callback(char* topic, byte* payload, unsigned int length)
 	{                                                       //put this in a sub block, so any unused memory can be freed as soon as possible, required to save mem while sending data
 		int pinNr = Device.GetPinNr(topic, strlen(topic));
 
-		#ifdef DEBUGSMARTLIVING
-		Serial.print("Payload: ");                            //show some debugging
-		Serial.println(msgString);
-		Serial.print("topic: ");
-		Serial.println(topic);
-		Serial.print("Pin: ");
-		Serial.println(pinNr);
-		#endif
+		MSGSL = "Payload: " + String(msgString) + " topic: " + String(topic) + " Pin: " + String(pinNr);
+		debug_sl_message(MSGSL, 1);
 
 		switch (pinNr)
 		{
@@ -165,4 +162,15 @@ void ElaboraAttuatori()
 		Att_SmartLiving.Att3[0] = false;
 	}
 		
+}
+
+void debug_sl_message(String MSG, int Syslogfacility)
+{
+#ifdef DEBUGSMARTLIVING
+	Serial.println(MSG);
+#endif
+
+#ifdef SYSLOGSMARTLIVING
+	sendSyslogMessage(Syslogfacility, MSG);
+#endif
 }

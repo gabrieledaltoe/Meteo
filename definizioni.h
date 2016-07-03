@@ -5,21 +5,23 @@
 //-------------------------------------------------------------------------------------------------
 
 // #define DEVELOP			// Per cambiare DEVELOP = ARDUINO Sviluppo, altrimenti Produzione
-#define DEBUGRUN			// Predispone ambiente di test su arduinio di produzione con il Debug
+// #define DEBUGRUN			// Predispone ambiente di per fare vedre determinati debug (vedi sotto)
 //___________________________________________________________________________________________________________
+//
+
+#define SYSLOGOWN			// Manda in syslog le attività OWN
+#define SYSLOGSMARTLIVING	// Manda in syslog le attività SAMRTLIVING
+
+
 
 #ifdef DEVELOP
 #define DEBUGSERIAL		// Esegue il debug su seriale dei Dati
-#define OWN				// Abilita la funzionalita OWN 
-#define DEBUGOWN
 #else 
 #define UNDEBUG			// Disattiva le opzioni di debug
-#define OWN
 #endif
 
 #ifdef DEBUGRUN
 #undef UNDEBUG	
-#define OWN
 #define DEBUGSERIAL
 #define DEBUGWIND		
 #define DEBUGLIGHT
@@ -29,6 +31,7 @@
 //-------------------------------------------------------------------------------------------------
 // SENSORI / FUNZIONI	ATTIVI
 //-------------------------------------------------------------------------------------------------
+#define OWN				// Abilita la funzionalita MyOpen Bticino
 #define SERIAL			// Attiva la seriale (per il debug su seriale)
 #define LCD				// Attiva LCD a bordo dell'Arduino
 #define LIGHT			// Attiva il sensore luce
@@ -39,15 +42,16 @@
 #define TH				// Abilita la funzione Temperatura e Umidita
 #define ETHERNET		// Abilita la Ethernet Shield di Arduino
 #define SMARTLIVING		// Abilita la funzionalita SmartLiving
-// #define SYSLOG			// Abilita il syslog
+#define SYSLOG			// Abilita il syslog
+#define SYSLOGLIGHT		// Abilita il syslog luce
 #ifdef DEVELOP
 #undef EMAIL
 #else 
 #define EMAIL			// Abilita la funziona email su allarmi
 #endif
 
-#ifndef ETHERNET		// Se non c'e' la Ethernet non ci possono essere TIME, DEVICEHUB, TIME, OWN e Syslog
-#undef DEVICEHUB
+#ifndef ETHERNET		// Se non c'e' la Ethernet non ci possono essere TIME, SMARTLIVING, TIME, OWN e SYSLOG
+#undef SMARTLIVING
 #undef TIME
 #undef OWN
 #undef SYSLOG
@@ -79,7 +83,8 @@
 #undef DEBUGRAINGAUGE	
 #undef DEBUGLIGHT		
 #undef DEBUGETHERNET
-// #undef DEBUGDEVICEHUB	
+#undef DEBUGSMARTLIVING	
+#undef DEBUGTH
 #undef DEBUGOWN				
 #undef DEBUGTIME	
 #undef DEBUGEMAIL
