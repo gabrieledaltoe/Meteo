@@ -21,18 +21,17 @@ float getUnitWind()
 
 void get_WindSpeed()
 {
+	// SOGLIAVENTO2 > SOGLIAVENTO1 36Km e 30Km
 #ifdef WIND
 	boolean flag = true;
 	if ((millis() - WindLast) >= (WIND_SAMPLERATE*1000)) {
 		StazioneMeteo.Wind = getUnitWind();
 		WindLast = millis();
 		if (StazioneMeteo.Wind >= SOGLIAMAXVENTO2) {
-			if (StazioneMeteo.Wind > StazioneMeteo.WindMax) {
-				SmartLiving_Wind();							// Pubblico il valore in DeviceHUB
-			}
-			StazioneMeteo.WindMax = StazioneMeteo.Wind;		// Mi prendo nota del vento più forte (verrà resettato quando effettuerò la pubblicazione di tutti i valori in Devicehub)
-			flag = false;									// Non faccio eseguire il blocco che arriva dopo
-			AllarmeVento(2);								// Procedo a segnalare il vento forte
+			SmartLiving_Wind();							// Pubblico il valore in SmartLiving
+			StazioneMeteo.WindMax = StazioneMeteo.Wind;	// Mi prendo nota del vento più forte (verrà resettato quando effettuerò la pubblicazione di tutti i valori in Devicehub)
+			flag = false;								// Non faccio eseguire il blocco che arriva dopo
+			AllarmeVento(2);							// Procedo a segnalare il vento forte
 		}
 		if ((StazioneMeteo.Wind >= SOGLIAMAXVENTO1) && flag) {
 			AllarmeVento(1);				// Procedo a segnalare il vento forte per il tendone

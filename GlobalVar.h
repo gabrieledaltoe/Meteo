@@ -98,7 +98,7 @@ boolean CrepuscolareON;
 //----------
 volatile unsigned long anem_count = 0;
 volatile unsigned long anem_last = 0;
-volatile unsigned long anem_min = 0xffffffff;
+// volatile unsigned long anem_min = 0xffffffff;
 volatile unsigned long WindLast;
 unsigned long AllarmeVentoForte;	// Per tenere traccia quando è stato l'ultimo allarme vento forte
 boolean FlagVentoForte = false;		// Per tenere traccia se è attivo o meno un allarme vento

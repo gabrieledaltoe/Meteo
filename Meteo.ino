@@ -53,10 +53,10 @@ void loop()
 	get_light();								// Legge l'intensita' di luce in %
 	get_th();									// Legge la sonda TH
 	get_vasca();								// Legge il volume di acqua nelle vasche
-	GestioneAllarmi();							// Gestione degli allarmi
 	show_lcd_values();							// Aggiorna i dati nel display LCD 
-	Debug_serial();								// Mando nella console seriale i valori
 	SmartLiving_Run();							// Gestisce la pubblicazioni dei dati su Smartliving
+	GestioneAllarmi();							// Gestione degli allarmi
+	Debug_serial();								// Mando nella console seriale i valori
 }
 
 

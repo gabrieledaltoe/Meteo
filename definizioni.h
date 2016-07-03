@@ -34,7 +34,7 @@
 #define LIGHT			// Attiva il sensore luce
 // #define MAILLIGHT   // Usato per comuncare via mail il cambio di stato del crepuscolare
 #define WIND			// Attiva il sensore velocita' e direzione Vento
-#define RAINGAUGE	// Attiva il sensore pioggia a bilancere
+// #define RAINGAUGE	// Attiva il sensore pioggia a bilancere
 // #define CISTERNA		// Attiva il sensore di profondità della Cisterna
 #define TH				// Abilita la funzione Temperatura e Umidita
 #define ETHERNET		// Abilita la Ethernet Shield di Arduino
@@ -117,11 +117,11 @@
 //-------------------------------------------------------------------------------------------------
 // OWN
 //-------------------------------------------------------------------------------------------------
-#define OWN_SERVER 10,20,9,2			// Indirizzo IP del gateway OWN - SCS -> Ora MH200N
+#define OWN_SERVER 10,20,9,2			// Indirizzo IP del gateway OWN - SCS -> F454
 #define OWN_PORT 20000					// Porta TCP di collegamento
 #define SOCKET_COMANDI  "*99*0##"	
 #define SOCKET_MONITOR  "*99*1##"
-#define OWN_TIMEOUT 30						// Timeout in secondi dal OWN (passati i quali se non vengono impartiti commandi viene disconnessa la sessione)
+#define OWN_TIMEOUT 30					// Timeout in secondi dal OWN (passati i quali se non vengono impartiti commandi viene disconnessa la sessione)
 
 //-------------------------------------------------------------------------------------------------
 // LCD
@@ -150,7 +150,7 @@
 #define CLIENTKEY "bdlpuwvqm5e"
 #endif
 
-#define MQTTUPDATE 30		// Tempo di Aggiornameto dei valori verso smartliving espesso in secondi
+#define MQTTUPDATE 60		// Tempo di Aggiornameto dei valori verso smartliving espesso in secondi
 
 #define IDLuce	0			// Primo Sensore in Smartliving
 #define IDTemp	1			// Secondo Sensore in Smartliving
@@ -164,7 +164,7 @@
 #define SOGLIAMAXVENTO1	30				// Soglia velocita' vento in Km/h oltre la quale il tendone deve chiudersi
 
 #define WIND_FACTOR 5.4					// Dalle specifiche dell'anemometro: Se il vento in 1 secondo fa compiere all'anemometro 1 giro (1Hz) -> allora il vento soffia a 5.4 Km/h
-#define WIND_SAMPLERATE 2				// Secondi per la campionatura della velocita' del Vento
+#define WIND_SAMPLERATE 3				// Secondi per la campionatura della velocita' del Vento
 #define WIND_FINEALLARMEVENTO 15		// Tempo in Minuti per resettare l'allarme Vento
 
 #define TH_SAMPLERATE 30				// Ogni XX Secondi vado a misurare la sonda TH
