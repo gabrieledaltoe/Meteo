@@ -8,11 +8,7 @@
 // #define DEBUGRUN			// Predispone ambiente di per fare vedre determinati debug (vedi sotto)
 //___________________________________________________________________________________________________________
 //
-
-#define SYSLOGOWN			// Manda in syslog le attività OWN
-#define SYSLOGSMARTLIVING	// Manda in syslog le attività SAMRTLIVING
-
-
+// #define  DEBUGSIMPLE
 
 #ifdef DEVELOP
 #define DEBUGSERIAL		// Esegue il debug su seriale dei Dati
@@ -43,7 +39,7 @@
 #define ETHERNET		// Abilita la Ethernet Shield di Arduino
 #define SMARTLIVING		// Abilita la funzionalita SmartLiving
 #define SYSLOG			// Abilita il syslog
-#define SYSLOGLIGHT		// Abilita il syslog luce
+// #define SYSLOGLIGHT		// Abilita il syslog luce
 #ifdef DEVELOP
 #undef EMAIL
 #else 
@@ -75,6 +71,25 @@
 #define DEBUGTIME				// Mostra i mssaggi relativi a Time
 #define DEBUGOWN				// Mostra i mssaggi relativi a OWN
 #define DEBUGEMAIL				// Mostra i messaggi relativi a Email
+
+#ifdef DEBUGSIMPLE
+#undef UNDEBUG
+#define DEBUGSERIAL	
+#undef DEBUGLCD			
+#define DEBUGWIND		
+#undef DEBUGRAINGAUGE	
+#define DEBUGLIGHT		
+#undef DEBUGETHERNET
+#undef DEBUGSMARTLIVING	
+#undef DEBUGTH
+#undef DEBUGOWN				
+#undef DEBUGTIME	
+#undef DEBUGEMAIL
+
+#define SYSLOGOWN			// Manda in syslog le attività OWN
+#define SYSLOGSMARTLIVING	// Manda in syslog le attività SAMRTLIVING
+
+#endif
 
 #ifdef UNDEBUG
 #undef DEBUGSERIAL	
@@ -155,7 +170,7 @@
 #define CLIENTKEY "bdlpuwvqm5e"
 #endif
 
-#define MQTTUPDATE 60		// Tempo di Aggiornameto dei valori verso smartliving espesso in secondi
+#define MQTTUPDATE 30		// Tempo di Aggiornameto dei valori verso smartliving espesso in secondi
 
 #define IDLuce	0			// Primo Sensore in Smartliving
 #define IDTemp	1			// Secondo Sensore in Smartliving
