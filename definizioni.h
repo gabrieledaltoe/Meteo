@@ -103,6 +103,8 @@
 #undef DEBUGOWN				
 #undef DEBUGTIME	
 #undef DEBUGEMAIL
+#define SYSLOGOWN			// Manda in syslog le attività OWN
+#define SYSLOGSMARTLIVING	// Manda in syslog le attività SAMRTLIVING
 #endif
 
 #ifndef ETHERNET
@@ -137,7 +139,7 @@
 //-------------------------------------------------------------------------------------------------
 // OWN
 //-------------------------------------------------------------------------------------------------
-#define OWN_SERVER 10,20,9,2			// Indirizzo IP del gateway OWN - SCS -> F454
+#define OWN_SERVER 10,20,9,1			// Indirizzo IP del gateway OWN - SCS -> F454
 #define OWN_PORT 20000					// Porta TCP di collegamento
 #define SOCKET_COMANDI  "*99*0##"	
 #define SOCKET_MONITOR  "*99*1##"

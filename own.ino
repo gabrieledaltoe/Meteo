@@ -5,17 +5,24 @@ boolean AckNack(void)
 	boolean stato = false;
 	String MSG_OWN;
 	int i = 0;
-	char msgOWN_Ricevuto[7];
+	char msgOWN_Ricevuto[]= "111111"; 
 	
 	if (ClientOWN.connected())           // Controlla che il client sia ancora connesso
 	{
-		delay(10);						// Delay in quanto puo' succedere che CliebtOWN.available sia 0 anche se in effetti e' connesso (1).
+		delay(30);						// Delay in quanto puo' succedere che ClientOWN.available sia 0 anche se in effetti e' connesso (1).
 		while (ClientOWN.available())
 		{
 			msgOWN_Ricevuto[i] = ClientOWN.read();   // Leggo la stringa che mi ritorna il Server OWN
 			i++;
 		}
-		if (strcmp(msgOWN_Ricevuto, ACK) == 0)	stato = true; // Se è ACK lo segnalo
+		if (strcmp(msgOWN_Ricevuto, ACK) == 0) {
+			stato = true; // Se è ACK lo segnalo
+		}
+		else
+		{
+			MSG_OWN = "MSG_ricevuto: " + String(msgOWN_Ricevuto);
+			debug_own_message(MSG_OWN, 2);
+		}
 	}
 	
 	return stato;
@@ -42,7 +49,7 @@ boolean OWN_Connect_Client()
 	else {
 		MSG_OWN = "Non sono riuscito a connettermi al server OWN";
 		debug_own_message(MSG_OWN, 1);
-		OWN_Stop_Client(); // Chiudo la connessione 
+		OWN_Stop_Client();			// Chiudo la connessione 
 	}
 	return stato;
 #endif
@@ -54,13 +61,14 @@ boolean OWN_Command_Client()
 	boolean stato;
 	String MSG_OWN;
 	ClientOWN.print(SOCKET_COMANDI);
+	delay(20);	// ritardo dopo aver mandato il messaggio
 	stato = AckNack();
 	if (stato) {
 		MSG_OWN = "Entrato in modalita' Comandi";
 		debug_own_message(MSG_OWN, 2);
 	}
 	else {
-		MSG_OWN = "Errore OWN ha dato NACK su comando";
+		MSG_OWN = "Errore OWN ha dato NACK in modalita' Commandi";
 		debug_own_message(MSG_OWN, 1);
 		}
 
@@ -96,9 +104,9 @@ boolean OWN_SendData(char *OWN_Command)
 		ClientOWN.print(OWN_Command); 
 		delay(100);
 		if (AckNack()) {
+			ok = true;
 			MSG_OWN = "Spedito correttamente il comando OWN: " + String(OWN_Command);
 			debug_own_message(MSG_OWN, 2);
-			ok = true;
 		}
 		else {
 			MSG_OWN = "Comando non accettato dal server OWN";
