@@ -10,18 +10,12 @@ void Init_light()
 	if (StazioneMeteo.Lux <= BUIO) 	{
 		OWN_SendData(OWN_CrepuscolareON);
 		CrepuscolareON = true;
-		#ifdef DEBUGLIGHT
-		Serial.println("INIT Light: Imposto il crepuscolare a 1");
-		#endif
-		sendSyslogMessage(1, "INIT Light: Appuro che e' buio e lo segnalo");
+		debug_light_message("INIT Light: Appuro che e' buio e lo segnalo",6);
 		}
 	else {
 		OWN_SendData(OWN_CrepuscolareOFF);
 		CrepuscolareON = 0;
-		#ifdef DEBUGLIGHT
-		Serial.println("INIT Light: Imposto il crepuscolare a 0");
-		#endif
-		sendSyslogMessage(1, "INIT Light: Appuro che e' chiaro e lo segnalo");
+		debug_light_message("INIT Light: Appuro che e' chiaro e lo segnalo",6);
 		}
 }
 
@@ -37,23 +31,16 @@ void get_light()
 
 void light_refresh()
 {
-int luce = (int)((1023.0 - (float)analogRead(LIGHT_PIN)) / 10.23);
-if (luce != StazioneMeteo.Lux) { // Considero solo i cambiamenti di luce, altrimenti non faccio nulla
-	#ifdef DEBUGLIGHT
-	Serial.print("Luce Attuale: ");
-	Serial.print(luce);
-	Serial.print(" Luce Precedente: ");
-	Serial.println(StazioneMeteo.Lux);
-	#endif	
-	StazioneMeteo.Lux = luce;         // Luce in percentuale (0-100) percento
-	#ifdef SYSLOGLIGHT
-	String syslogstring;
-	char logluce[5];
-	dtostrf(StazioneMeteo.Lux, 2, 1, logluce);
-	syslogstring = "Luce ";
-	syslogstring += logluce;
-	sendSyslogMessage(1, syslogstring);
-	#endif
+	String msg;
+	int luce = (int)((1023.0 - (float)analogRead(LIGHT_PIN)) / 10.23);
+	if (luce != StazioneMeteo.Lux) { // Considero solo i cambiamenti di luce, altrimenti non faccio nulla
+		#ifdef DEBUGLIGHT
+		msg = "Luce Attuale: " + String(luce) + " Luce Precedente: " + String(StazioneMeteo.Lux);
+		Serial.println(msg);
+		#endif	
+		StazioneMeteo.Lux = luce;         // Luce in percentuale (0-100) percento
+		msg = msg = "Luce " + String(StazioneMeteo.Lux);
+		debug_light_message(msg, 6);
 	}
 }
 
@@ -62,25 +49,29 @@ void check_light()
 	if ((StazioneMeteo.Lux <= BUIO) && (!CrepuscolareON)) {
 		OWN_SendData(OWN_CrepuscolareON);
 		CrepuscolareON = true;
-		sendSyslogMessage(1, "Passaggio da Luce a Buio");
-		#ifdef MAILLIGHT
-		SendMail("Crepuscolare", "Crepuscolare ON");
-		#endif
-		#ifdef DEBUGLIGHT
-		Serial.println("Dico che e' Buio");
-		#endif
+		String msg = "Passaggio da Luce a Buio";
+		debug_light_message("Passaggio da Luce a Buio",6);
 		}
 
 	if ((StazioneMeteo.Lux > BUIO) && (CrepuscolareON)) {
 		OWN_SendData(OWN_CrepuscolareOFF);
 		CrepuscolareON = 0;
-		sendSyslogMessage(1, "Passaggio da Buio a Luce");
-		#ifdef MAILLIGHT
-		SendMail("Crepuscolare", "Crepuscolare OFF");
-		#endif
-		#ifdef DEBUGLIGHT
-		Serial.println("Dico che c'e' Luce");
-		#endif
+		String msg = "Passaggio da Buio a Luce";
+		debug_light_message("Passaggio da Luce a Buio", 6);
 		}
 }
 
+void debug_light_message(String MSG, int Syslogfacility)
+{
+#ifdef DEBUG_LIGHT
+	Serial.println(MSG);
+#endif
+
+#ifdef SYSLOGLIGHT
+	sendSyslogMessage(Syslogfacility, MSG);
+#endif
+
+#ifdef MAIL_LIGHT
+	SendMail("Crepuscolare", MSG);
+#endif
+}

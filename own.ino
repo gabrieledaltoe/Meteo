@@ -21,7 +21,7 @@ boolean AckNack(void)
 		else
 		{
 			MSG_OWN = "MSG_ricevuto: " + String(msgOWN_Ricevuto);
-			debug_own_message(MSG_OWN, 2);
+			debug_own_message(MSG_OWN, 6);
 		}
 	}
 	
@@ -39,11 +39,11 @@ boolean OWN_Connect_Client()
 	delay(10);
 	if (con ) {
 		MSG_OWN = "Connesso al server OWN";
-		debug_own_message(MSG_OWN, 2);
+		debug_own_message(MSG_OWN, 6);
 		if (AckNack())	{
 			stato = true;
 			MSG_OWN = "Il server OWN e' pronto ci ha risposto ACK";
-			debug_own_message(MSG_OWN, 2);
+			debug_own_message(MSG_OWN, 6);
 		}
 	}
 	else {
@@ -65,7 +65,7 @@ boolean OWN_Command_Client()
 	stato = AckNack();
 	if (stato) {
 		MSG_OWN = "Entrato in modalita' Comandi";
-		debug_own_message(MSG_OWN, 2);
+		debug_own_message(MSG_OWN, 6);
 	}
 	else {
 		MSG_OWN = "Errore OWN ha dato NACK in modalita' Commandi";
@@ -82,7 +82,7 @@ void OWN_Stop_Client()
 	MSG_OWN = "Chiudo la connessione";
 	ClientOWN.flush();
 	ClientOWN.stop();
-	debug_own_message(MSG_OWN, 2);
+	debug_own_message(MSG_OWN, 6);
 }
 
 boolean OWN_SendData(char *OWN_Command)
@@ -106,7 +106,7 @@ boolean OWN_SendData(char *OWN_Command)
 		if (AckNack()) {
 			ok = true;
 			MSG_OWN = "Spedito correttamente il comando OWN: " + String(OWN_Command);
-			debug_own_message(MSG_OWN, 2);
+			debug_own_message(MSG_OWN, 6);
 		}
 		else {
 			MSG_OWN = "Comando non accettato dal server OWN";
