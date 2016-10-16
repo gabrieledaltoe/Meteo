@@ -12,7 +12,7 @@
 #define _VSARDUINO_H_
 #define __AVR_ATmega2560__
 #define F_CPU 16000000L
-#define ARDUINO 10609
+#define ARDUINO 106012
 #define ARDUINO_AVR_MEGA2560
 #define ARDUINO_ARCH_AVR
 #define __cplusplus 201103L
@@ -49,21 +49,18 @@ extern "C" void __cxa_pure_virtual() {;}
 #define F(string_literal) ((const PROGMEM char *)(string_literal))
 #undef PSTR
 #define PSTR(string_literal) ((const PROGMEM char *)(string_literal))")
-#include <Meteo.ino>
-#include <GlobalVar.h>
-#include <LCD.ino>
-#include <Raingauge.ino>
-#include <Wind.ino>
-#include <datatypes.h>
-#include <debug.ino>
-#include <definizioni.h>
-#include <email.ino>
-#include <ethernet.ino>
-#include <light.ino>
-#include <own.ino>
-#include <routine.ino>
-#include <smatliving.ino>
-#include <syslog.ino>
-#include <th.ino>
-#include <vasca.ino>
+#include "Meteo.ino"
+#include "LCD.ino"
+#include "Raingauge.ino"
+#include "Wind.ino"
+#include "debug.ino"
+#include "email.ino"
+#include "ethernet.ino"
+#include "light.ino"
+#include "own.ino"
+#include "routine.ino"
+#include "smatliving.ino"
+#include "syslog.ino"
+#include "th.ino"
+#include "vasca.ino"
 #endif

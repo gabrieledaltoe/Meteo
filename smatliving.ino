@@ -33,7 +33,7 @@ void Init_SmartLiving()
 {
 	String MSGSL;
 	MSGSL = "Inizio Connessione con Smartliving...";
-	debug_sl_message(MSGSL, 2);
+	debug_sl_message(MSGSL, 6);
 	
 	if (Device.Connect(&ethClient, httpServer)) {    
 

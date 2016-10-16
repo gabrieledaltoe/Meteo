@@ -85,10 +85,8 @@
 #undef DEBUGOWN				
 #undef DEBUGTIME	
 #undef DEBUGEMAIL
-
 #define SYSLOGOWN			// Manda in syslog le attività OWN
 #define SYSLOGSMARTLIVING	// Manda in syslog le attività SAMRTLIVING
-
 #endif
 
 #ifdef UNDEBUG
