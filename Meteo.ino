@@ -5,11 +5,13 @@
 #include <LiquidCrystal.h>
 #include <Wire.h>
 #include <SPI.h>
-#include <Ethernet.h>
+#include <Ethernet2.h>  
+// #include <Ethernet.h>  // USA la vecchia ethernet
+#include <EthernetClient.h>
 #include <Adafruit_AM2315.h>
 #include "datatypes.h"
 #include <Time.h>
-#include <EthernetUdp.h>
+// #include <EthernetUdp.h>
 #include <PubSubClient.h>
 #include <ATT_IOT.h>
 #include "definizioni.h"

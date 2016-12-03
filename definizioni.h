@@ -6,6 +6,7 @@
 
 // #define DEVELOP			// Per cambiare DEVELOP = ARDUINO Sviluppo, altrimenti Produzione
 // #define DEBUGRUN			// Predispone ambiente di per fare vedre determinati debug (vedi sotto)
+
 //___________________________________________________________________________________________________________
 //
 // #define  DEBUGSIMPLE
@@ -119,10 +120,10 @@
 #define IPSTATIC true								// Indica se si vuole usare l'IP Statico per Arduino altrimenti viene richiesto via DHCP
 
 #ifdef DEVELOP
-#define MAC_ARDUINO 0x90,0xA2,0xDA,0x0F,0xAC,0x6E	// MAC Address Arduino Mega Test
+#define MAC_ARDUINO 0x90,0xA2,0xDA,0x10,0xAF,0x51	// MAC Address Arduino Mega Test
 #define IP_ARDUINO 10,20,2,9						// IP Arduino
 #else
-#define MAC_ARDUINO 0x90,0xA2,0xDA,0x0F,0x66,0x79	// MAC Address Arduino Mega Produzione
+#define MAC_ARDUINO 0x90,0xA2,0xDA,0x10,0x8F,0x0E	// MAC Address Arduino Mega Produzione
 #define IP_ARDUINO 10,20,2,8						// IP Arduino
 #endif
 
@@ -158,8 +159,8 @@
 //-------------------------------------------------------------------------------------------------
 // Se SMARTLIVING_FIRST_TIME e' definito mi crea/aggiorna i vari asset in Smartliving, altrimenti aggiorna solo i valori ma non aggiorna gli asset
 #define SMARTLIVING_FIRST_TIME 
-#define MQTTSERVER "broker.smartliving.io"	
-#define HTTPSERVER "api.smartliving.io"
+#define MQTTSERVER "api.AllThingsTalk.io"	
+#define HTTPSERVER "api.AllThingsTalk.io"
 #ifdef DEVELOP
 #define DEVICEID "ng5D4ukwKbiDJBzZca4V271"
 #define CLIENTID "gabrieledaltoe"
